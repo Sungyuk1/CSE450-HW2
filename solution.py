@@ -29,11 +29,15 @@ def question02(text):
     from rply import LexerGenerator
     lg = LexerGenerator()
 
+    #\b is word boundary in regex
+
     # Add your code here
-    lg.add('NON_TITLE_CASE', 'r[A-Z]{2,}+|[a-z]{2,}+')
-    lg.add('TITLE_CASE', r'[a-z]')
-    lg.add('OTHER', 'r[^A-Za-z]')
-    lg.ignore(r'\s+')
+    lg.add('NON_TITLE_CASE', r'\b[a-z]{2,}|[A-Z]{2,}\b')
+    lg.add('TITLE_CASE', r'\b[A-Z][a-z]*\b')
+    lg.add('OTHER', r'[^A-Za-z]')
+    lg.ignore(' ')
+    lg.ignore('\n')
+    lg.ignore('\t')
 
     lexer = lg.build()
     return list(lexer.lex(text))
